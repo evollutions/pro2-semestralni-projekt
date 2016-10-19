@@ -1,4 +1,4 @@
-package cz.uhk.fim.pro2.semestralni_projekt;
+package cz.uhk.fim.pro2.game;
 
 public class Bird {
 	private int liveCount;
