@@ -3,6 +3,11 @@ package cz.uhk.fim.pro2.game.model;
 public class Heart {
 	private float positionX, positionY;
 
+	public Heart(float positionX, float positionY) {
+		this.positionX = positionX;
+		this.positionY = positionY;
+	}
+	
 	public float getPositionX() {
 		return positionX;
 	}
