@@ -1,9 +1,11 @@
 package cz.uhk.fim.pro2.game.gui;
 
 import java.awt.Canvas;
-import java.awt.Color;
 import java.awt.Graphics;
 
+import cz.uhk.fim.pro2.game.model.Bird;
+import cz.uhk.fim.pro2.game.model.Heart;
+import cz.uhk.fim.pro2.game.model.Tube;
 import cz.uhk.fim.pro2.game.model.World;
 
 public class GameCanvas extends Canvas {
@@ -12,12 +14,19 @@ public class GameCanvas extends Canvas {
 	public GameCanvas(World world) {
 		this.world = world;
 	}
-
+	
 	@Override
 	public void paint(Graphics g) {
 		super.paint(g);
+		
+		world.getBird().paint(g);
 
-		g.setColor(Color.red);
-		g.drawRect(world.getBird().getPositionX(), world.getBird().getPositionY(), 100, 100);
+		for (Heart heart : world.getHearts()) {
+			heart.paint(g);
+		}
+
+		for (Tube tube : world.getTubes()) {
+			tube.paint(g);
+		}
 	}
 }

@@ -11,7 +11,7 @@ public class Game {
 	public static void main(String[] args) {
 		MainFrame mainFrame = new MainFrame();
 		
-		Screen screen = new HomeScreen(mainFrame);
-		mainFrame.setScreen(screen);
+		Screen homeScreen = new HomeScreen(mainFrame);
+		mainFrame.setScreen(homeScreen);
 	}
 }
