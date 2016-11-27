@@ -7,6 +7,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.Timer;
 
 import cz.uhk.fim.pro2.game.interfaces.WorldListener;
@@ -18,26 +19,37 @@ import cz.uhk.fim.pro2.game.model.World;
 public class GameScreen extends Screen implements WorldListener {
 	private long lastTimeMs;
 	private Timer timer;
-
+	
+	private JButton btnBack, btnPause;
+	private JLabel lblLives, lblScore, lblGameOver;
+	
+	private Bird bird;
+	
 	public GameScreen(MainFrame mainFrame) {
 		super(mainFrame);
 		
-		JButton jButtonBack = new JButton("BACK");
-		JButton jButtonPause = new JButton("PAUSE");
+		btnBack = new JButton("BACK");
+		btnPause = new JButton("PAUSE");
 		
-		jButtonBack.setLocation(10, 10);
-		jButtonBack.setSize(80, 30);
-		jButtonPause.setLocation(90, 10);
-		jButtonPause.setSize(80, 30);
+		lblLives = new JLabel("Score: " + Bird.DEFAULT_LIVES);
+		lblScore = new JLabel("Lives: " + Bird.DEFAULT_SCORE);
+		lblGameOver = new JLabel("GAME OVER");
 		
-		jButtonBack.addActionListener(new ActionListener() {	
+		btnBack.setBounds(10, 10, 80, 30);
+		btnPause.setBounds(90, 10, 80, 30);
+		
+		lblLives.setBounds(10, 50, 50, 30);
+		lblScore.setBounds(10, 80, 50, 30);
+		lblGameOver.setBounds(20, 300, 300, 200);
+		
+		btnBack.addActionListener(new ActionListener() {	
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				mainFrame.setScreen(new HomeScreen(mainFrame));
 			}
 		});
 		
-		jButtonPause.addActionListener(new ActionListener() {		
+		btnPause.addActionListener(new ActionListener() {		
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (timer.isRunning()) {
@@ -49,10 +61,7 @@ public class GameScreen extends Screen implements WorldListener {
 			}
 		});
 	
-		add(jButtonBack);
-		add(jButtonPause);
-		
-		Bird bird = new Bird("Franta", 240, 400);
+		bird = new Bird("Franta", 240, 400);
 		World world = new World(bird, this);
 		world.addTube(new Tube(400f, 400f, Color.green));
 		world.addTube(new Tube(600f, 300f, Color.green));
@@ -69,9 +78,7 @@ public class GameScreen extends Screen implements WorldListener {
 				bird.goUp();
 			}
 		});
-		
-		add(gameCanvas);
-		
+			
 		timer = new Timer(20, new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -79,6 +86,14 @@ public class GameScreen extends Screen implements WorldListener {
 				
 				float deltaTime = (currentTimeMs - lastTimeMs) / 1000f;
 				world.update(deltaTime);
+				
+				lblLives.setText("Lives: " + bird.getLives());
+				lblScore.setText("Score: " + bird.getScore());
+				
+				if (!bird.isAlive()) {
+					timer.stop();
+					//add(lblGameOver);
+				}			
 				gameCanvas.repaint();
 				
 				lastTimeMs = currentTimeMs;
@@ -87,20 +102,32 @@ public class GameScreen extends Screen implements WorldListener {
 		
 		lastTimeMs = System.currentTimeMillis();
 		timer.start();
+		
+		add(btnBack);
+		add(btnPause);
+		add(lblLives);
+		add(lblScore);
+		add(gameCanvas);
 	}
 	
 	@Override
 	public void collidedWithTube(Tube tube) {
-		System.out.println("Colliding with tube");
+		bird.removeLive();
+		bird.setScore(bird.getScore() - 1);
+		bird.setPositionY((int) tube.getCenter());
 	}
 
 	@Override
 	public void collidedWithHeart(Heart heart) {
-		System.out.println("Colliding with heart");	
+		bird.addLive();
 	}
 
 	@Override
 	public void isOutOfBounds() {
-		System.out.println("Out of bounds");	
+		if (bird.getPositionY() > MainFrame.HEIGHT) {
+			bird.setPositionY(0);
+		} else if (bird.getPositionY() < 0) {
+			bird.setPositionY(MainFrame.HEIGHT);
+		}
 	}
 }

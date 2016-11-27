@@ -9,17 +9,21 @@ import cz.uhk.fim.pro2.game.gui.MainFrame;
 public class Bird {
 	private static final int GRAVITY = 300;
 	private static final int JUMP = 600;
-	private int positionX, positionY;
-	private float speed;
-	private int lives;
+	
+	public static final int DEFAULT_LIVES = 3;
+	public static final int DEFAULT_SCORE = 0;
+	
 	private String name;
+	private int positionX, positionY;
+	private int lives, score, speed;
 
 	public Bird(String name, int positionX, int positionY) {
 		this.name = name;
 		this.positionX = positionX;
 		this.positionY = positionY;
-		lives = 3;
-		speed = 0f;
+		lives = DEFAULT_LIVES;
+		score = DEFAULT_SCORE;
+		speed = 0;
 	}
 
 	public void paint(Graphics g) {
@@ -51,6 +55,22 @@ public class Bird {
 		return (rect.getMaxY() > MainFrame.HEIGHT || rect.getY() < 0);
 	}
 
+	public void die() {
+
+	}
+	
+	public boolean isAlive() {
+		return lives > 0;
+	}
+
+	public void addLive() {
+		lives++;
+	}
+
+	public void removeLive() {
+		lives--;
+	}
+	
 	public Rectangle getRect() {
 		return new Rectangle((int) positionX - 25, (int) positionY - 25, 50, 50);
 	}
@@ -74,20 +94,16 @@ public class Bird {
 	public void setPositionY(int positionY) {
 		this.positionY = positionY;
 	}
-
-	public void catchHeart() {
-
+		
+	public int getLives() {
+		return lives;
 	}
-
-	public void die() {
-
+	
+	public int getScore() {
+		return score;
 	}
-
-	public void addLive() {
-		lives++;
-	}
-
-	public void removeLive() {
-		lives--;
+	
+	public void setScore(int score) {
+		this.score = score;
 	}
 }

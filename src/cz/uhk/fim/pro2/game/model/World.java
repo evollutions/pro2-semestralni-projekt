@@ -9,9 +9,9 @@ public class World {
 	public static final int SPEED = 100;
 
 	private Bird bird;
-	private WorldListener worldListener;
 	private List<Tube> tubes;
 	private List<Heart> hearts;
+	private WorldListener worldListener;
 
 	public World(Bird bird, WorldListener worldListener) {
 		this.bird = bird;
@@ -32,6 +32,14 @@ public class World {
 			
 			if (bird.isCollidingWith(tube)) {
 				worldListener.collidedWithTube(tube);
+				tube.setCounted(true);
+			} else {
+				if (bird.getPositionX() > tube.getMinX() && bird.getPositionX() < tube.getMaxX()) {
+					if (!tube.wasCounted()) {
+						bird.setScore(bird.getScore() + 1);
+						tube.setCounted(true);
+					}
+				}
 			}
 		}
 

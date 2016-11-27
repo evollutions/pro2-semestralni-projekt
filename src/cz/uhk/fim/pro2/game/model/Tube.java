@@ -8,15 +8,18 @@ import cz.uhk.fim.pro2.game.gui.MainFrame;
 
 public class Tube {
 	private static final int GAP = 200;
+	private static final int WIDTH = 50;
 
 	private float positionX;
 	private float height;
 	private Color color;
+	private boolean state;
 
 	public Tube(float positionX, float height, Color color) {
 		this.positionX = positionX;
 		this.height = height;
 		this.color = color;
+		state = false;
 	}
 
 	public void paint(Graphics g) {
@@ -33,6 +36,18 @@ public class Tube {
 		positionX -= World.SPEED * deltaTime;
 	}
 
+	public float getCenter() {
+		return height - GAP / 2;
+	}
+	
+	public int getMinX() {
+		return (int) (getPositionX() - WIDTH / 2);
+	}
+	
+	public int getMaxX() {
+		return (int) (getPositionX() + WIDTH / 2);
+	}
+	
 	public Rectangle getRectTop() {
 		return new Rectangle((int) positionX - 25, (int) height, 50, MainFrame.HEIGHT - (int) height);
 	}
@@ -55,5 +70,13 @@ public class Tube {
 
 	public void setColor(Color color) {
 		this.color = color;
+	}
+	
+	public boolean wasCounted() {
+		return state;
+	}
+	
+	public void setCounted(boolean state) {
+		this.state = state;
 	}
 }
