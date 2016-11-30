@@ -38,8 +38,8 @@ public class GameScreen extends Screen implements WorldListener {
 		btnBack.setBounds(10, 10, 80, 30);
 		btnPause.setBounds(90, 10, 80, 30);
 		
-		lblLives.setBounds(10, 50, 50, 30);
-		lblScore.setBounds(10, 80, 50, 30);
+		lblLives.setBounds(10, 50, 100, 30);
+		lblScore.setBounds(10, 80, 100, 30);
 		lblGameOver.setBounds(20, 300, 300, 200);
 		
 		btnBack.addActionListener(new ActionListener() {	
@@ -63,10 +63,11 @@ public class GameScreen extends Screen implements WorldListener {
 	
 		bird = new Bird("Franta", 240, 400);
 		World world = new World(bird, this);
-		world.addTube(new Tube(400f, 400f, Color.green));
+		/*world.addTube(new Tube(400f, 400f, Color.green));
 		world.addTube(new Tube(600f, 300f, Color.green));
 		world.addTube(new Tube(800f, 500f, Color.green));
-		world.addHeart(new Heart(500f,  450f));
+		world.addHeart(new Heart(500f,  450f));*/
+		world.generateRandom();
 		
 		GameCanvas gameCanvas = new GameCanvas(world);
 		gameCanvas.setBounds(0, 0, MainFrame.WIDTH, MainFrame.HEIGHT);
@@ -93,7 +94,7 @@ public class GameScreen extends Screen implements WorldListener {
 				if (!bird.isAlive()) {
 					timer.stop();
 					//add(lblGameOver);
-				}			
+				}
 				gameCanvas.repaint();
 				
 				lastTimeMs = currentTimeMs;

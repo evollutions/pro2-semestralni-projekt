@@ -1,5 +1,6 @@
 package cz.uhk.fim.pro2.game.model;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,20 +8,28 @@ import cz.uhk.fim.pro2.game.interfaces.WorldListener;
 
 public class World {
 	public static final int SPEED = 100;
+	public static final int SPACE_BETWEEN_TUBES = 300;
+	public static final int SPACE_BETWEEN_HEARTS = 450;
 
 	private Bird bird;
 	private List<Tube> tubes;
 	private List<Heart> hearts;
 	private WorldListener worldListener;
+	private boolean isGenerated;
 
 	public World(Bird bird, WorldListener worldListener) {
 		this.bird = bird;
 		this.worldListener = worldListener;
 		tubes = new ArrayList<>();
 		hearts = new ArrayList<>();
+		isGenerated = false;
 	}
 
 	public void update(float deltaTime) {
+		if (isGenerated) {
+			regenerate();
+		}
+		
 		bird.update(deltaTime);
 
 		if (bird.isOutOfBounds()) {
@@ -35,7 +44,7 @@ public class World {
 				tube.setCounted(true);
 			} else {
 				if (bird.getPositionX() > tube.getMinX() && bird.getPositionX() < tube.getMaxX()) {
-					if (!tube.wasCounted()) {
+					if (!tube.wasCounted() && bird.getPositionX() > tube.getPositionX()) {
 						bird.setScore(bird.getScore() + 1);
 						tube.setCounted(true);
 					}
@@ -50,18 +59,32 @@ public class World {
 				worldListener.collidedWithHeart(heart);
 			}
 		}
-
-		for (int i = tubes.size() - 1; i >= 0; i--) {
-			if (tubes.get(i).getPositionX() < 0) {
-				tubes.remove(i);
+	}
+	
+	public void generateRandom() {
+		for (int i = 0; i < 3; i++) {
+			addTube(new Tube(SPACE_BETWEEN_TUBES + i * SPACE_BETWEEN_TUBES, Tube.getRandomHeight(), Color.GREEN));
+		}
+		
+		for (int i = 0; i < 1; i++) {
+			addHeart(new Heart(SPACE_BETWEEN_HEARTS, Heart.getRandomY()));
+		}
+		isGenerated = true;
+	}
+	
+	private void regenerate() {
+		for (Tube tube : tubes) {
+			if (tube.getPositionX() < -100) {
+				tube.setPositionX(tube.getPositionX() + tubes.size() * SPACE_BETWEEN_TUBES);
+				tube.setHeight(Tube.getRandomHeight());
+				tube.setCounted(false);
 			}
 		}
-
-		for (int i = hearts.size() - 1; i >= 0; i--) {
-			if (hearts.get(i).getPositionX() < 0) {
-				hearts.remove(i);
-			} else if (bird.isCollidingWith(hearts.get(i))) {
-				hearts.remove(i);
+		
+		for (Heart heart : hearts) {
+			if (heart.getPositionX() < -100) {
+				heart.setPositionX(heart.getPositionX() + (hearts.size() + 1) * SPACE_BETWEEN_HEARTS);
+				heart.setPositionY(Heart.getRandomY());
 			}
 		}
 	}

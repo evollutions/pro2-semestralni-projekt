@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
+import cz.uhk.fim.pro2.game.gui.GameCanvas;
 import cz.uhk.fim.pro2.game.gui.MainFrame;
 
 public class Bird {
@@ -52,7 +53,7 @@ public class Bird {
 	
 	public boolean isOutOfBounds() {
 		Rectangle rect = getRect();	
-		return (rect.getMaxY() > MainFrame.HEIGHT || rect.getY() < 0);
+		return (rect.getMaxY() < GameCanvas.UP_BOUND || rect.getMaxY() > MainFrame.HEIGHT - GameCanvas.DOWN_BOUND);
 	}
 
 	public void die() {
