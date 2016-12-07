@@ -21,7 +21,7 @@ public class GameScreen extends Screen implements WorldListener {
 	private Timer timer;
 	
 	private JButton btnBack, btnPause;
-	private JLabel lblLives, lblScore, lblGameOver;
+	private JLabel lblLives, lblScore;
 	
 	private Bird bird;
 	
@@ -33,14 +33,12 @@ public class GameScreen extends Screen implements WorldListener {
 		
 		lblLives = new JLabel("Score: " + Bird.DEFAULT_LIVES);
 		lblScore = new JLabel("Lives: " + Bird.DEFAULT_SCORE);
-		lblGameOver = new JLabel("GAME OVER");
 		
 		btnBack.setBounds(10, 10, 80, 30);
 		btnPause.setBounds(90, 10, 80, 30);
 		
 		lblLives.setBounds(10, 50, 100, 30);
 		lblScore.setBounds(10, 80, 100, 30);
-		lblGameOver.setBounds(20, 300, 300, 200);
 		
 		btnBack.addActionListener(new ActionListener() {	
 			@Override
@@ -93,7 +91,7 @@ public class GameScreen extends Screen implements WorldListener {
 				
 				if (!bird.isAlive()) {
 					timer.stop();
-					//add(lblGameOver);
+					mainFrame.setScreen(new FinishScreen(mainFrame, world));
 				}
 				gameCanvas.repaint();
 				
@@ -120,6 +118,7 @@ public class GameScreen extends Screen implements WorldListener {
 
 	@Override
 	public void collidedWithHeart(Heart heart) {
+		heart.setPositionX(-100f);
 		bird.addLive();
 	}
 
