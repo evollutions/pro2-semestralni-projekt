@@ -29,12 +29,7 @@ public class HomeScreen extends Screen {
 		jButtonPlay.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				try {
-					mainFrame.setScreen(new GameScreen(mainFrame));
-				} catch (IOException ex) {
-					// TODO Auto-generated catch block
-					ex.printStackTrace();
-				}
+				mainFrame.setScreen(new GameScreen(mainFrame));
 			}
 		});
 

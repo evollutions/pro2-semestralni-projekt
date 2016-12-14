@@ -35,11 +35,7 @@ public class FinishScreen extends Screen {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				try {
-					mainFrame.setScreen(new GameScreen(mainFrame));
-				} catch (IOException ex) {
-					ex.printStackTrace();
-				}
+				mainFrame.setScreen(new GameScreen(mainFrame));
 			}
 		});
 		

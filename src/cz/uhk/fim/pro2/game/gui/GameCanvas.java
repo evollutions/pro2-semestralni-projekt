@@ -21,7 +21,7 @@ public class GameCanvas extends Canvas {
 	
 	private BufferedImage imgBird, imgHeart, imgBackground, imgTube, imgTop, imgBottom;
 
-	public GameCanvas(World world) throws IOException {
+	public GameCanvas(World world) {
 		this.world = world;
 		
 		try {
@@ -32,8 +32,8 @@ public class GameCanvas extends Canvas {
 			imgBackground = ImageIO.read(new File("assets/background.png"));
 			imgTop = ImageIO.read(new File("assets/top.png"));
 			imgBottom = ImageIO.read(new File("assets/bottom.png"));
-		} catch (IOException ex) {
-			ex.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 	

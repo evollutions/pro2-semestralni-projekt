@@ -26,7 +26,7 @@ public class GameScreen extends Screen implements WorldListener {
 	
 	private Bird bird;
 	
-	public GameScreen(MainFrame mainFrame) throws IOException {
+	public GameScreen(MainFrame mainFrame) {
 		super(mainFrame);
 		
 		btnBack = new JButton("BACK");
