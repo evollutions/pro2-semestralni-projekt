@@ -3,6 +3,7 @@ package cz.uhk.fim.pro2.game.model;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
 
 import cz.uhk.fim.pro2.game.gui.GameCanvas;
 import cz.uhk.fim.pro2.game.gui.MainFrame;
@@ -17,6 +18,8 @@ public class Bird {
 	private String name;
 	private int positionX, positionY;
 	private int lives, score, speed;
+	
+	//private BufferedImage imgBird;
 
 	public Bird(String name, int positionX, int positionY) {
 		this.name = name;
@@ -27,10 +30,10 @@ public class Bird {
 		speed = 0;
 	}
 
-	public void paint(Graphics g) {
+	public void paint(Graphics g, BufferedImage img) {
 		g.setColor(Color.BLUE);
 		Rectangle rect = getRect();
-		g.fillRect((int) rect.getX(), (int) rect.getY(), (int) rect.getWidth(), (int) rect.getHeight());
+		g.drawImage(img, (int) rect.getX(), (int) rect.getY(), (int) rect.getWidth(), (int) rect.getHeight(), null);
 	}
 
 	public void update(float deltaTime) {

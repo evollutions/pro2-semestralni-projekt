@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -25,7 +26,7 @@ public class GameScreen extends Screen implements WorldListener {
 	
 	private Bird bird;
 	
-	public GameScreen(MainFrame mainFrame) {
+	public GameScreen(MainFrame mainFrame) throws IOException {
 		super(mainFrame);
 		
 		btnBack = new JButton("BACK");

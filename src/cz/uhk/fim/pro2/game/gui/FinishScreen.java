@@ -3,6 +3,7 @@ package cz.uhk.fim.pro2.game.gui;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -34,7 +35,11 @@ public class FinishScreen extends Screen {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				mainFrame.setScreen(new GameScreen(mainFrame));
+				try {
+					mainFrame.setScreen(new GameScreen(mainFrame));
+				} catch (IOException ex) {
+					ex.printStackTrace();
+				}
 			}
 		});
 		
