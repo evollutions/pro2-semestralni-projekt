@@ -5,10 +5,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.SwingConstants;
 import javax.swing.Timer;
 
 import cz.uhk.fim.pro2.game.interfaces.WorldListener;
@@ -26,46 +26,14 @@ public class GameScreen extends Screen implements WorldListener {
 	
 	private Bird bird;
 	
+	public static final int UP_BOUND = 50;
+	public static final int DOWN_BOUND = 100;
+	
 	public GameScreen(MainFrame mainFrame) {
 		super(mainFrame);
 		
-		btnBack = new JButton("BACK");
-		btnPause = new JButton("PAUSE");
-		
-		lblLives = new JLabel("Score: " + Bird.DEFAULT_LIVES);
-		lblScore = new JLabel("Lives: " + Bird.DEFAULT_SCORE);
-		
-		btnBack.setBounds(10, 10, 80, 30);
-		btnPause.setBounds(90, 10, 80, 30);
-		
-		lblLives.setBounds(10, 50, 100, 30);
-		lblScore.setBounds(10, 80, 100, 30);
-		
-		btnBack.addActionListener(new ActionListener() {	
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				mainFrame.setScreen(new HomeScreen(mainFrame));
-			}
-		});
-		
-		btnPause.addActionListener(new ActionListener() {		
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (timer.isRunning()) {
-					timer.stop();
-				} else {
-					lastTimeMs = System.currentTimeMillis();
-					timer.restart();
-				}
-			}
-		});
-	
 		bird = new Bird("Franta", 240, 400);
 		World world = new World(bird, this);
-		/*world.addTube(new Tube(400f, 400f, Color.green));
-		world.addTube(new Tube(600f, 300f, Color.green));
-		world.addTube(new Tube(800f, 500f, Color.green));
-		world.addHeart(new Heart(500f,  450f));*/
 		world.generateRandom();
 		
 		GameCanvas gameCanvas = new GameCanvas(world);
@@ -94,7 +62,9 @@ public class GameScreen extends Screen implements WorldListener {
 					timer.stop();
 					mainFrame.setScreen(new FinishScreen(mainFrame, world));
 				}
+							
 				gameCanvas.repaint();
+				repaint(); // Repaint ovladacich prvku
 				
 				lastTimeMs = currentTimeMs;
 			}
@@ -102,6 +72,40 @@ public class GameScreen extends Screen implements WorldListener {
 		
 		lastTimeMs = System.currentTimeMillis();
 		timer.start();
+		
+		btnBack = new JButton("BACK");
+		btnPause = new JButton("PAUSE");
+		
+		lblLives = new JLabel("Lives: " + Bird.DEFAULT_LIVES, SwingConstants.CENTER);
+		lblScore = new JLabel("Score: " + Bird.DEFAULT_SCORE, SwingConstants.CENTER);
+		
+		lblLives.setOpaque(true);
+		lblScore.setOpaque(true);
+
+		btnBack.setBounds(10, 10, 80, 60);
+		btnPause.setBounds(100, 10, 80, 60);
+	
+		lblLives.setBounds(270, 10, 90, 60);
+		lblScore.setBounds(370, 10, 90, 60);
+		
+		btnBack.addActionListener(new ActionListener() {	
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				mainFrame.setScreen(new HomeScreen(mainFrame));
+			}
+		});
+		
+		btnPause.addActionListener(new ActionListener() {		
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (timer.isRunning()) {
+					timer.stop();
+				} else {
+					lastTimeMs = System.currentTimeMillis();
+					timer.restart();
+				}
+			}
+		});
 		
 		add(btnBack);
 		add(btnPause);

@@ -14,19 +14,12 @@ public class ScoreManager {
 	}
 	
 	public void addScore(int score) {
-		List<Integer> scoreList = getAll();
-		scoreList.add(score);
-		scoreList.sort(null);
-		
 		try {
-			FileWriter fileWriter = new FileWriter(Game.SCORE_FILE, true);
-			
-			for (int value : scoreList) {
-				fileWriter.append(String.valueOf(value));
-				fileWriter.append(";");
-				fileWriter.append(new Date().toGMTString());
-				fileWriter.append("\n");
-			}
+			FileWriter fileWriter = new FileWriter(Game.SCORE_FILE, true);	
+			fileWriter.append(String.valueOf(score));
+			fileWriter.append(";");
+			fileWriter.append(new Date().toGMTString());
+			fileWriter.append("\n");
 			fileWriter.flush();
 			fileWriter.close();
 		} catch (IOException e) {

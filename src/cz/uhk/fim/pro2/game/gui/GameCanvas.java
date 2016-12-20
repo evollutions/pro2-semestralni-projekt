@@ -1,6 +1,5 @@
 package cz.uhk.fim.pro2.game.gui;
 
-import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
@@ -8,18 +7,21 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.JPanel;
 
 import cz.uhk.fim.pro2.game.model.Heart;
 import cz.uhk.fim.pro2.game.model.Tube;
 import cz.uhk.fim.pro2.game.model.World;
 
-public class GameCanvas extends Canvas {
-	public static final int UP_BOUND = 50;
-	public static final int DOWN_BOUND = 100;
+public class GameCanvas extends JPanel {
+	public static final int UP_BOUND = 80;
+	public static final int DOWN_BOUND = 120;
 	
 	private World world;
 	
 	private BufferedImage imgBird, imgHeart, imgBackground, imgTube, imgTop, imgBottom;
+	
+	private final Color BACKGROUND_COLOR = new Color(78, 192, 202);
 
 	public GameCanvas(World world) {
 		this.world = world;
@@ -38,13 +40,19 @@ public class GameCanvas extends Canvas {
 	}
 	
 	@Override
-	public void paint(Graphics g) {
-		super.paint(g);
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
 		
-		g.setColor(Color.CYAN);
+		g.setColor(BACKGROUND_COLOR);
 		g.fillRect(0, 0, MainFrame.WIDTH, MainFrame.HEIGHT);
 		
-		g.drawImage(imgBackground, 0, UP_BOUND, MainFrame.WIDTH, MainFrame.HEIGHT - (DOWN_BOUND * 2), null);
+		g.drawImage(imgBackground, 0, 500, MainFrame.WIDTH, 250, null);
+		/* TODO rotate 
+		Graphics2D g2d = (Graphics2D)g;
+		AffineTransform trans = new AffineTransform();
+		trans.setTransform(identity);
+		trans.rotate( Math.toRadians(45) );
+		g2d.drawImage(image, trans, this);*/
 		
 		world.getBird().paint(g, imgBird);
 
@@ -57,6 +65,6 @@ public class GameCanvas extends Canvas {
 		}
 		
 		g.drawImage(imgTop, 0, 0, MainFrame.WIDTH, UP_BOUND, null);
-		g.drawImage(imgBottom, 0, MainFrame.HEIGHT - DOWN_BOUND - 60, MainFrame.WIDTH, DOWN_BOUND + 30, null);
+		g.drawImage(imgBottom, 0, MainFrame.HEIGHT - DOWN_BOUND, MainFrame.WIDTH, DOWN_BOUND, null);
 	}
 }

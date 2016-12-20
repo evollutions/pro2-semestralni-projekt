@@ -76,7 +76,7 @@ public class Bird {
 	}
 	
 	public Rectangle getRect() {
-		return new Rectangle((int) positionX - 25, (int) positionY - 25, 50, 50);
+		return new Rectangle((int) positionX - 25, (int) positionY - 20, 50, 40);
 	}
 
 	public String getName() {

@@ -74,9 +74,8 @@ public class Tube {
 		this.height = height;
 	}
 
-	
 	public static float getRandomHeight() {
-		return (new Random().nextFloat() * 600f) + 100f;
+		return (float) (Math.random() * (650.f - 300.f)) + 300.f;
 	}
 
 	public Color getColor() {
