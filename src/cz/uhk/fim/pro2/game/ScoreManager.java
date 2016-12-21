@@ -5,7 +5,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class ScoreManager {
@@ -13,12 +12,10 @@ public class ScoreManager {
 	private ScoreManager() {
 	}
 	
-	public void addScore(int score) {
+	public void addScore(Score score) {
 		try {
 			FileWriter fileWriter = new FileWriter(Game.SCORE_FILE, true);	
-			fileWriter.append(String.valueOf(score));
-			fileWriter.append(";");
-			fileWriter.append(new Date().toGMTString());
+			fileWriter.append(score.toString());
 			fileWriter.append("\n");
 			fileWriter.flush();
 			fileWriter.close();
@@ -27,8 +24,8 @@ public class ScoreManager {
 		}
 	}
 	
-	public List<Integer> getAll() {
-		List<Integer> scoreList = new ArrayList<>();
+	public List<Score> getAll() {
+		List<Score> scoreList = new ArrayList<>();
 		
 		try {
 			FileReader fileReader = new FileReader(Game.SCORE_FILE);
@@ -37,12 +34,29 @@ public class ScoreManager {
 			String line;
 			while ((line = bufferedReader.readLine()) != null) {
 				String[] values = line.split(";");		
-				scoreList.add(Integer.valueOf(values[0]));
+				scoreList.add(new Score(Integer.valueOf(values[0]), values[1], values[2]));
 			}		
 		} catch (Exception e) {
+			e.printStackTrace();
 			System.out.println("Chyba pri nacitani");
-		}		
+		}
+		sortScore(scoreList);
 		return scoreList;
+	}
+	
+	private void sortScore(List<Score> scoreList) {
+		Score temp;
+		
+	    for (int i = 0; i < scoreList.size(); i++) {
+	        for (int j = 1; j < (scoreList.size() - i); j++) {
+
+	            if (scoreList.get(j - 1).getPoints() < scoreList.get(j).getPoints()) {
+	                temp = scoreList.get(j - 1);
+	                scoreList.set(j - 1, scoreList.get(j));
+	                scoreList.set(j, temp);
+	            }
+	        }
+	    }
 	}
 	
 	private static ScoreManager instance;
@@ -54,7 +68,7 @@ public class ScoreManager {
 		return instance;
 	}
 
-	public static void putScore(int score) {
+	public static void putScore(Score score) {
 		getInstance().addScore(score);
 	}
 	
@@ -62,7 +76,7 @@ public class ScoreManager {
 		return getInstance().getAll().size();
 	}
 	
-	public static int get(int index) {
+	public static Score get(int index) {
 		return getInstance().getAll().get(index);
 	}
 }

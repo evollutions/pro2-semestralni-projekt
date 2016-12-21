@@ -8,6 +8,7 @@ import cz.uhk.fim.pro2.game.interfaces.WorldListener;
 
 public class World {
 	public static final int SPEED = 100;
+	public static int CURRENT_SPEED;
 	public static final int SPACE_BETWEEN_TUBES = 300;
 	public static final int SPACE_BETWEEN_HEARTS = 450;
 
@@ -26,6 +27,12 @@ public class World {
 	}
 
 	public void update(float deltaTime) {
+		if (bird.getScore() > 0) {
+			CURRENT_SPEED = SPEED + (bird.getScore() * 4);
+		} else {
+			CURRENT_SPEED = SPEED;
+		}
+		
 		if (isGenerated) {
 			regenerate();
 		}
@@ -111,7 +118,7 @@ public class World {
 
 	@Override
 	public String toString() {
-		return "Bird:" + bird.getName() + " on position: " + bird.getPositionX() + ":" + bird.getPositionY()
+		return "Bird: on position: " + bird.getPositionX() + ":" + bird.getPositionY()
 				+ "\nThere are " + tubes.size() + " tubes and " + hearts.size() + " hearts in the world.";
 	}
 }

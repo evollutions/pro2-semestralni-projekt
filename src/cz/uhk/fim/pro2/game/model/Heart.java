@@ -21,11 +21,11 @@ public class Heart {
 	}
 
 	public Rectangle getRect() {
-		return new Rectangle((int) positionX - 25, (int) positionY - 25, 50, 50);
+		return new Rectangle((int) positionX - 15, (int) positionY - 15, 30, 30);
 	}
 
 	public void update(float deltaTime) {
-		positionX -= World.SPEED * deltaTime;
+		positionX -= World.CURRENT_SPEED * deltaTime;
 	}
 
 	public static float getRandomY() {

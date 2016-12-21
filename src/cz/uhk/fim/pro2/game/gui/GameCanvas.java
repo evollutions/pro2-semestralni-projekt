@@ -47,12 +47,6 @@ public class GameCanvas extends JPanel {
 		g.fillRect(0, 0, MainFrame.WIDTH, MainFrame.HEIGHT);
 		
 		g.drawImage(imgBackground, 0, 500, MainFrame.WIDTH, 250, null);
-		/* TODO rotate 
-		Graphics2D g2d = (Graphics2D)g;
-		AffineTransform trans = new AffineTransform();
-		trans.setTransform(identity);
-		trans.rotate( Math.toRadians(45) );
-		g2d.drawImage(image, trans, this);*/
 		
 		world.getBird().paint(g, imgBird);
 

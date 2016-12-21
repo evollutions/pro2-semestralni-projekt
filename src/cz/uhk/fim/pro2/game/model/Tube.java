@@ -35,7 +35,7 @@ public class Tube {
 	}
 
 	public void update(float deltaTime) {
-		positionX -= World.SPEED * deltaTime;
+		positionX -= World.CURRENT_SPEED * deltaTime;
 	}
 
 	public float getCenter() {

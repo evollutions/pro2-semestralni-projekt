@@ -15,14 +15,12 @@ public class Bird {
 	public static final int DEFAULT_LIVES = 3;
 	public static final int DEFAULT_SCORE = 0;
 	
-	private String name;
 	private int positionX, positionY;
 	private int lives, score, speed;
 	
 	//private BufferedImage imgBird;
 
-	public Bird(String name, int positionX, int positionY) {
-		this.name = name;
+	public Bird(int positionX, int positionY) {
 		this.positionX = positionX;
 		this.positionY = positionY;
 		lives = DEFAULT_LIVES;
@@ -77,10 +75,6 @@ public class Bird {
 	
 	public Rectangle getRect() {
 		return new Rectangle((int) positionX - 25, (int) positionY - 20, 50, 40);
-	}
-
-	public String getName() {
-		return name;
 	}
 
 	public int getPositionX() {

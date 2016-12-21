@@ -25,7 +25,7 @@ public class ScoreScreen extends Screen {
 		
 		for (int i = 0; i < ScoreManager.getSize(); i++) {
 			ScoreItem scoreItem = new ScoreItem(i + 1, ScoreManager.get(i));
-			scoreItem.setBounds(50, 200 + i * 50, 300, 50);
+			scoreItem.setBounds(20, 200 + i * 50, 500, 50);
 			add(scoreItem);
 		}
 		
